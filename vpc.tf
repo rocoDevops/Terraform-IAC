@@ -100,6 +100,29 @@ resource "aws_route_table_association" "Private2" {
   route_table_id = aws_route_table.Private.id
 }
 ####################### CREATING SECURITY GROUP ###############
+resource "aws_security_group" "SG-Automation" {
+  name        = "allow_ssh"
+  description = "Allow SSH inbound traffic"
+  vpc_id      = aws_vpc.main.id
 
+  ingress {
+    description      = "SSH from anywhere"
+    from_port        = 0
+    to_port          = 22
+    protocol         = "tcp"
+    cidr_blocks      = [aws_vpc.main.cidr_block]
+  }
+
+  egress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "SG-Automation"
+  }
+}
 
 
