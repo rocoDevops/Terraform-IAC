@@ -4,6 +4,7 @@ resource "aws_vpc" "main" {
 
   tags = {
     Name = "Terraform-VPC"
+    Company = var.Company
   }
 }
 ######################### SUBNET ASSOCIATION ##################
@@ -13,6 +14,7 @@ resource "aws_subnet" "Public-1" {
 
   tags = {
     Name = "Public-Subnet-1"
+    
   }
 }
 resource "aws_subnet" "Public-2" {
@@ -124,10 +126,12 @@ resource "aws_security_group" "SG-Automation" {
     Name = "SG-Automation"
   }
 }
+###################### KEY PAIR ##########################
 resource "aws_key_pair" "Terra-key" {
   key_name   = "Terra-key"
   public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCcaUnrTwzEG9fxyZUCowMB/Kc3BqRCq+amk73YKfvPQRcXgLTbKhycIR5EIM5hXm3DZW28JZ64K1mN294t24Klc4grY+Je1pBeHLqK84vaPzFxJ73dPvvNvrtKDSyUQlf03HuWDDrlWBjpam9Z6eodr8XtSvAumKLku1Jxdikvw9Wb9xAOlxhYiKzQZSRUn5bMTzi/Nj4HIHE/+7EEEg2HJM8ID5bB8jXohDMz+q0SX5OfjduYDsp5byVN7+dj1SLRnjY5TKz8/mC+bfcNDDV/S6FUPG/7X2lJh3MEcIb6n3baI5L29ROq/K3FUruZfR35198xHRzRA9q94G1SYSD0STn8spoq23a2ZqLT6jX2r+VFU6kAIbYLNqJPfMabfvvm7MhoVu9i+m+L8ga7GGSagWrYQpfoPMnc7ks0iEIWntQpZHH5OalA7a2n9mWrKlmR9dF7sD7TfErc8jndx2ezbwWqZ9/mxujtbhONxURAePudA3ffwmO0e9C1dSmYXaU= ubuntu@ip-172-31-21-116"
 }
+####################### INSTANCE CREATION ######################
 resource "aws_instance" "Terra-Server" {
   ami           = "ami-053b0d53c279acc90"
   instance_type = "t2.small"
